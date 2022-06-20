@@ -1,4 +1,4 @@
-# ⚔️ --- The Legend Of Turgut --- ⚔️
+# ⚔️ The Legend Of Turgut ⚔️
 
 ## Présentation
 
@@ -7,7 +7,7 @@
 En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous ce projet ludique. Un projet jeu qui me permet de coder avec l'aide de mes enfants. J'ai utilisé Phaser.js, Pygame et Unity mais je suis revenu a une version en JavaScript qui est le language le plus utilisé lors de ma formation.
 
 <p align="center">
-    <button> ⚔️ Cliquer ici pour jouer ⚔️</button>
+    <a href= "https://kevinozkaraca.github.io/Turgut_Javascript/"> ⚔️ Cliquer ici pour jouer ⚔️</a>
 </p>
 
 Le jeu vidéo est un moyen ludique et plaisant pour partager et faire découvrir la programmation. J'ai toujours aimé partager mes connaissances et j'espère que ce projet sucitera autant de plaisir dans le jeu que j'ai à le concevoir ! Alors merci à vous...
