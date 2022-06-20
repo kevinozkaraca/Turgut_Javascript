@@ -35,13 +35,12 @@ h2 {
 #gameScreenCenter {
   margin-left: auto;
   margin-right: auto;
-  width: 100%;
 }
 #canvas {
   border: rgb(76, 74, 74) 3px solid;
   background: rgb(0, 0, 0);
   margin-left: auto;
   margin-right: auto;
-  width: 45%;
+
   display: block;
 }

@@ -50,5 +50,5 @@ function draw() {
 }
 draw();
 
-// Zoom la taille du jeu (implémenter les bouttons)
-//document.body.style.zoom = "250%";
+// Zoom la taille du jeu (implémenter des bouttons)
+document.body.style.zoom = "250%";
