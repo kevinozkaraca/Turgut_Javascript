@@ -1,7 +1,7 @@
 // Variables de la base du jeu
-const fps = 60;
-const ctx = canvas.getContext("2d");
-const worldTiles = new Image();
+let fps = 60;
+let ctx = canvas.getContext("2d");
+let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld.png";
 let rightPressed = false;
 let leftPressed = false;
@@ -14,7 +14,30 @@ let lastButtonPressed = "up";
 let turgutY = 135;
 let turgutX = 116;
 let turgut1 = new Image();
-turgut1.src = "./playerImages/turgut.png";
+turgut1.src = "./playerImages/turgut1.png";
+let gameObjects = [];
+let maps = [];
+let gameMap = null;
+// Zoom la taille du jeu (implémenter des bouttons)
+document.body.style.zoom = "250%";
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+function GameObject() {
+  this.x = 0;
+  this.y = 0;
+  this.width = 0;
+  this.height = 0;
+  this.newMap = 0;
+  this.newturgutX = 0;
+  this.newturgutY = 0;
+  this.isPortal = false;
+}
+
+function MapBundle(m, o) {
+  this.map = m;
+  this.gameobjects = o;
+}
 
 function keyDownHandler(e) {
   if (e.keyCode == 37) {
@@ -48,7 +71,7 @@ function drawturgut() {
   let speed = 2;
   animationCounter++;
 
-  if (leftPressed && !collision(turgutX - speed, turgutY, map7_7)) {
+  if (leftPressed && !collision(turgutX - speed, turgutY, gameMap)) {
     turgutX -= speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
@@ -62,7 +85,7 @@ function drawturgut() {
         currentAnimation = 0;
       }
     }
-  } else if (rightPressed & !collision(turgutX + speed, turgutY, map7_7)) {
+  } else if (rightPressed & !collision(turgutX + speed, turgutY, gameMap)) {
     turgutX += speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 91, 0, 16, 16, turgutX, turgutY, 16, 16);
@@ -76,7 +99,7 @@ function drawturgut() {
         currentAnimation = 0;
       }
     }
-  } else if (upPressed & !collision(turgutX, turgutY - speed, map7_7)) {
+  } else if (upPressed & !collision(turgutX, turgutY - speed, gameMap)) {
     turgutY -= speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
@@ -90,7 +113,7 @@ function drawturgut() {
         currentAnimation = 0;
       }
     }
-  } else if (downPressed & !collision(turgutX, turgutY + speed, map7_7)) {
+  } else if (downPressed & !collision(turgutX, turgutY + speed, gameMap)) {
     turgutY += speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
@@ -120,8 +143,7 @@ function drawturgut() {
   }
 }
 
-// Cartes du jeu
-const map7_7 = [
+let map7_7 = [
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
@@ -138,6 +160,67 @@ const map7_7 = [
   [61, 61, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 61, 61],
   [61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61],
 ];
+let objects7_7 = [];
+
+let gO = new GameObject();
+gO.x = 72;
+gO.y = 72;
+gO.width = 8;
+gO.height = 16;
+gO.newMap = 1;
+gO.newturgutX = 120;
+gO.newturgutY = 220;
+gO.isPortal = true;
+objects7_7.push(gO);
+
+let bundle = new MapBundle(map7_7, objects7_7);
+maps.push(bundle);
+
+let mapWoodSword = [
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 37, 37, 37, 37, 37, 28, 28, 37, 37, 37, 37, 37, 55, 55],
+  [55, 55, 55, 55, 55, 55, 55, 28, 28, 55, 55, 55, 55, 55, 55, 55],
+];
+let gameObjectsWoodSword = [];
+
+gO = new GameObject();
+gO.x = 112;
+gO.y = 240;
+gO.width = 16;
+gO.height = 16;
+gO.newMap = 0;
+gO.newturgutX = 68;
+gO.newturgutY = 96;
+gO.isPortal = true;
+gameObjectsWoodSword.push(gO);
+
+gO = new GameObject();
+gO.x = 128;
+gO.y = 240;
+gO.width = 16;
+gO.height = 16;
+gO.newMap = 0;
+gO.newturgutX = 68;
+gO.newturgutY = 96;
+gO.isPortal = true;
+gameObjectsWoodSword.push(gO);
+
+bundle = new MapBundle(mapWoodSword, gameObjectsWoodSword);
+maps.push(bundle);
+gameMap = maps[0].map;
+gameObjects = maps[0].gameobjects;
 
 function drawMap(level) {
   for (let i = 0; i < level.length; i++) {
@@ -156,10 +239,11 @@ function drawMap(level) {
     }
   }
 }
+
 function collision(x, y, map) {
   for (let i = 0; i < map.length; i++) {
     for (let j = 0; j < map[i].length; j++) {
-      if (map[i][j] != 2) {
+      if (map[i][j] != 2 && map[i][j] != 28) {
         if (x <= j * 16 + 16 && x + 12 >= j * 16 && y + 10 <= i * 16 + 16 && y + 16 >= i * 16) {
           return true;
         }
@@ -169,18 +253,34 @@ function collision(x, y, map) {
   return false;
 }
 
+function gameObjectCollision(x, y, objects, isturgut) {
+  if (isturgut) {
+    for (let i = 0; i < objects.length; i++) {
+      if (
+        x <= objects[i].x + objects[i].width &&
+        x + 16 >= objects[i].x &&
+        y <= objects[i].y + objects[i].height &&
+        y + 16 >= objects[i].y
+      ) {
+        if (objects[i].isPortal) {
+          gameMap = maps[objects[i].newMap].map;
+          gameObjects = maps[objects[i].newMap].gameobjects;
+          turgutX = objects[i].newturgutX;
+          turgutY = objects[i].newturgutY;
+        }
+      }
+    }
+  }
+}
+
 function draw() {
   setTimeout(function () {
     requestAnimationFrame(draw);
     ctx.fillStyle = "rgb(20,20,20)";
     ctx.fillRect(0, 0, 256, 240);
-    drawMap(map7_7);
+    drawMap(gameMap);
+    drawturgut();
+    gameObjectCollision(turgutX, turgutY, gameObjects, true);
   }, 1000 / fps);
-  drawturgut();
 }
 draw();
-
-// Zoom la taille du jeu (implémenter des bouttons)
-document.body.style.zoom = "250%";
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
