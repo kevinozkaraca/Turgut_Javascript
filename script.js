@@ -1,8 +1,8 @@
 const fps = 60;
-let ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d");
 
-let worldTiles = new Image();
-worldTiles.src = "/gameImages/tiles-overworld.png";
+const worldTiles = new Image();
+worldTiles.src = "./gameImages/tiles-overworld.png";
 
 let map7_7 = [
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],

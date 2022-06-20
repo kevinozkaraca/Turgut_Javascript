@@ -22,15 +22,15 @@ h1 {
   font-family: "retro1";
   font-size: medium;
   text-align: center;
-  color: rgb(255, 255, 255);
-  text-shadow: 1px 1px 0px #0022ff;
+  color: rgb(28, 217, 224);
+  text-shadow: 1px 1px 0px #000000;
 }
 h2 {
   font-family: "retro1";
   font-size: small;
   text-align: center;
-  color: rgb(188, 145, 14);
-  text-shadow: 1px 1px 0px #005b65;
+  color: rgb(242, 214, 0);
+  text-shadow: 1px 1px 0px #015a66;
 }
 #gameScreenCenter {
   margin-left: auto;
