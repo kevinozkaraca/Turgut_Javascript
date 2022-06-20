@@ -1,0 +1,47 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+@font-face {
+  font-family: "retro1";
+  src: url(fontWeb/retro1.ttf);
+}
+@font-face {
+  font-family: "retro2";
+  src: url(fontWeb/retro2.ttf);
+}
+body {
+  font-family: "retro2";
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  background-color: rgb(76, 74, 74);
+}
+
+h1 {
+  font-family: "retro1";
+  font-size: medium;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 0px #0022ff;
+}
+h2 {
+  font-family: "retro1";
+  font-size: small;
+  text-align: center;
+  color: rgb(188, 145, 14);
+  text-shadow: 1px 1px 0px #005b65;
+}
+#gameScreenCenter {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+#canvas {
+  border: rgb(76, 74, 74) 3px solid;
+  background: rgb(0, 0, 0);
+  margin-left: auto;
+  margin-right: auto;
+  width: 45%;
+  display: block;
+}
