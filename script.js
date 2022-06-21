@@ -1,4 +1,4 @@
-// Variables de la base du jeu
+// Cours 05
 let fps = 60;
 let ctx = canvas.getContext("2d");
 let worldTiles = new Image();
@@ -19,7 +19,7 @@ let gameObjects = [];
 let maps = [];
 let gameMap = null;
 // Zoom la taille du jeu (implémenter des bouttons)
-document.body.style.zoom = "250%";
+document.body.style.zoom = "260%";
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 

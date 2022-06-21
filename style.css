@@ -27,7 +27,7 @@ h1 {
 }
 h2 {
   font-family: "retro1";
-  font-size: small;
+  font-size: x-small;
   text-align: center;
   color: rgb(242, 214, 0);
   text-shadow: 1px 1px 0px #015a66;
@@ -42,4 +42,6 @@ h2 {
   margin-left: auto;
   margin-right: auto;
   display: block;
+  image-rendering: optimizeSpeed;
+  image-rendering: pixelated;
 }
