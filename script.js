@@ -1,8 +1,12 @@
 // Cours 05
+
+// Vitesse du rafraichissement
 let fps = 60;
 let ctx = canvas.getContext("2d");
+// Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
-worldTiles.src = "./gameImages/tiles-overworld.png";
+worldTiles.src = "./gameImages/tiles-overworld1.png";
+// Variable de mouvements du personnage
 let rightPressed = false;
 let leftPressed = false;
 let upPressed = false;
@@ -10,9 +14,11 @@ let downPressed = false;
 let animationCounter = 0;
 let currentAnimation = 0;
 let animationSpeed = 10;
-let lastButtonPressed = "up";
+let lastButtonPressed = "down";
+// Position de départ du joueur
 let turgutY = 135;
 let turgutX = 116;
+// Image conteenant les images du personnage
 let turgut1 = new Image();
 turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
@@ -273,9 +279,12 @@ function gameObjectCollision(x, y, objects, isturgut) {
   }
 }
 
+// Fonction d'affichage du jeu
 function draw() {
   setTimeout(function () {
     requestAnimationFrame(draw);
+    // fillRect() dessine un rectangle plein aux coordonnées (x, y)
+    // et au style déterminé par l'attribut fillStyle
     ctx.fillStyle = "rgb(20,20,20)";
     ctx.fillRect(0, 0, 256, 240);
     drawMap(gameMap);
@@ -283,4 +292,5 @@ function draw() {
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
   }, 1000 / fps);
 }
+
 draw();
