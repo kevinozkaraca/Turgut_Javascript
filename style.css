@@ -10,6 +10,7 @@
   font-family: "retro2";
   src: url(fontWeb/retro2.ttf);
 }
+
 body {
   font-family: "retro2";
   margin-left: auto;
@@ -17,30 +18,13 @@ body {
   width: 100%;
   background-color: rgb(76, 74, 74);
 }
-h1 {
-  font-family: "retro1";
-  font-size: medium;
-  text-align: center;
-  color: rgb(28, 217, 224);
-  text-shadow: 1px 1px 0px #000000;
+.gameScreenCenter {
+  background-color: rgb(76, 74, 74);
 }
-h2 {
-  font-family: "retro1";
-  font-size: x-small;
-  text-align: center;
-  color: rgb(242, 214, 0);
-  text-shadow: 1px 1px 0px #015a66;
-}
-#gameScreenCenter {
-  margin-left: auto;
-  margin-right: auto;
-}
-#canvas {
-  border: rgb(76, 74, 74) 3px solid;
+canvas {
+  border: rgb(189, 189, 189) 3px solid;
   background: rgb(0, 0, 0);
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  image-rendering: optimizeSpeed;
   image-rendering: pixelated;
+  display: block;
+  margin: auto;
 }

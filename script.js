@@ -1,8 +1,27 @@
-// Cours 05
-
 // Vitesse du rafraichissement
 let fps = 60;
-let ctx = canvas.getContext("2d");
+// Mise a jour de la taille du jeu (Responsive)
+let canvasResponsive = document.getElementById("canvasResponsive");
+let ctx = canvasResponsive.getContext("2d");
+let windowsWidthScreen = window.innerWidth;
+let windowHeightScreen = window.innerHeight;
+
+console.log(window.innerHeight);
+function responsiveCanvas() {
+  if (windowHeightScreen < windowsWidthScreen) {
+    let scaleHeight = `${(windowHeightScreen - 10) / 256}`;
+    canvasResponsive.width = 256 * scaleHeight;
+    canvasResponsive.height = 240 * scaleHeight;
+    ctx.scale(scaleHeight, scaleHeight);
+  } else {
+    let scaleWidth = `${(windowsWidthScreen - 10) / 256}`;
+    canvasResponsive.width = 256 * scaleWidth;
+    canvasResponsive.height = 240 * scaleWidth;
+    ctx.scale(scaleWidth, scaleWidth);
+  }
+}
+responsiveCanvas();
+
 // Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld1.png";
@@ -24,8 +43,8 @@ turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
 let maps = [];
 let gameMap = null;
-// Zoom la taille du jeu (implémenter des bouttons)
-document.body.style.zoom = "260%";
+
+// Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
