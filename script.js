@@ -5,8 +5,6 @@ let canvasResponsive = document.getElementById("canvasResponsive");
 let ctx = canvasResponsive.getContext("2d");
 let windowsWidthScreen = window.innerWidth;
 let windowHeightScreen = window.innerHeight;
-
-console.log(window.innerHeight);
 function responsiveCanvas() {
   if (windowHeightScreen < windowsWidthScreen) {
     let scaleHeight = `${(windowHeightScreen - 10) / 256}`;
