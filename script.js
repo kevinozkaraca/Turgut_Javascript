@@ -19,7 +19,8 @@ function responsiveCanvas() {
   }
 }
 responsiveCanvas();
-
+// Manette absente à la base
+axe1Joypad = false;
 // Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld1.png";
@@ -41,7 +42,6 @@ turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
 let maps = [];
 let gameMap = null;
-
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -98,8 +98,10 @@ function drawturgut() {
     turgutX -= speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
+      axe1Joypad = true;
     } else if (currentAnimation == 1) {
       ctx.drawImage(turgut1, 30, 30, 16, 16, turgutX, turgutY, 16, 16);
+      axe1Joypad = false;
     }
     if (animationCounter >= 6) {
       currentAnimation++;
@@ -151,12 +153,10 @@ function drawturgut() {
       }
     }
   } else {
-    if (lastButtonPressed == "down") {
-      ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (lastButtonPressed == "up") {
-      ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
-    }
+    if (lastButtonPressed == "down")
+      if (lastButtonPressed == "up") {
+        ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
+      }
     if (lastButtonPressed == "left") {
       ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
     }
@@ -295,6 +295,25 @@ function gameObjectCollision(x, y, objects, isturgut) {
     }
   }
 }
+// Fonction de la manette - A CORRIGER
+
+window.addEventListener("gamepadconnected", function (e) {
+  let gp = navigator.getGamepads()[e.gamepad.index];
+  console.log("Info : " + gp.id + " détécté avec " + gp.buttons.length + " buttons.");
+  console.log("Info : " + gp.id + " détécté avec " + gp.axes.length + " axes.");
+  let axe1 = gp.axes[0];
+  let axe2 = gp.axes[1];
+  let axe3 = gp.axes[2];
+  let axe4 = gp.axes[3];
+  setInterval(function () {
+    // ===> Get a fresh GamepadList! <===
+    var gp = navigator.getGamepads()[e.gamepad.index];
+    console.log(axe1);
+    if (axe1 <= 0.01) {
+      console.log(axe1);
+    }
+  }, 100);
+});
 
 // Fonction d'affichage du jeu
 function draw() {
