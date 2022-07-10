@@ -19,8 +19,7 @@ function responsiveCanvas() {
   }
 }
 responsiveCanvas();
-// Manette absente à la base
-axe1Joypad = false;
+
 // Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld1.png";
@@ -42,6 +41,7 @@ turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
 let maps = [];
 let gameMap = null;
+
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -98,10 +98,8 @@ function drawturgut() {
     turgutX -= speed;
     if (currentAnimation == 0) {
       ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
-      axe1Joypad = true;
     } else if (currentAnimation == 1) {
       ctx.drawImage(turgut1, 30, 30, 16, 16, turgutX, turgutY, 16, 16);
-      axe1Joypad = false;
     }
     if (animationCounter >= 6) {
       currentAnimation++;
@@ -153,10 +151,12 @@ function drawturgut() {
       }
     }
   } else {
-    if (lastButtonPressed == "down")
-      if (lastButtonPressed == "up") {
-        ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
-      }
+    if (lastButtonPressed == "down") {
+      ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
+    }
+    if (lastButtonPressed == "up") {
+      ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
+    }
     if (lastButtonPressed == "left") {
       ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
     }
@@ -295,6 +295,23 @@ function gameObjectCollision(x, y, objects, isturgut) {
     }
   }
 }
+
+// Fonction d'affichage du jeu
+function draw() {
+  setTimeout(function () {
+    requestAnimationFrame(draw);
+    // fillRect() dessine un rectangle plein aux coordonnées (x, y)
+    // et au style déterminé par l'attribut fillStyle
+    ctx.fillStyle = "rgb(20,20,20)";
+    ctx.fillRect(0, 0, 256, 240);
+    drawMap(gameMap);
+    drawturgut();
+    gameObjectCollision(turgutX, turgutY, gameObjects, true);
+  }, 1000 / fps);
+}
+
+draw();
+/*
 // Fonction de la manette - A CORRIGER
 
 window.addEventListener("gamepadconnected", function (e) {
@@ -314,19 +331,4 @@ window.addEventListener("gamepadconnected", function (e) {
     }
   }, 100);
 });
-
-// Fonction d'affichage du jeu
-function draw() {
-  setTimeout(function () {
-    requestAnimationFrame(draw);
-    // fillRect() dessine un rectangle plein aux coordonnées (x, y)
-    // et au style déterminé par l'attribut fillStyle
-    ctx.fillStyle = "rgb(20,20,20)";
-    ctx.fillRect(0, 0, 256, 240);
-    drawMap(gameMap);
-    drawturgut();
-    gameObjectCollision(turgutX, turgutY, gameObjects, true);
-  }, 1000 / fps);
-}
-
-draw();
+*/
