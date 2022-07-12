@@ -41,10 +41,46 @@ turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
 let maps = [];
 let gameMap = null;
+let joypadDetection = 0;
 
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+
+//Detection de la manette
+window.addEventListener("gamepadconnected", function (detect) {
+  let gp = navigator.getGamepads()[detect.gamepad.index];
+  if (GamepadEvent) {
+    console.log("Info : " + gp.id + " détécté avec " + gp.buttons.length + " buttons.");
+    console.log("Info : " + gp.id + " détécté avec " + gp.axes.length + " axes.");
+    joypadDetection = 1;
+  }
+});
+// Fonction de la manette
+function Joypad() {
+  let gp = navigator.getGamepads()[0];
+  if (GamepadEvent) {
+    joypadDetection = 1;
+    let axe1 = gp.axes[0];
+    let axe2 = gp.axes[1];
+    let axe3 = gp.axes[2];
+    let axe4 = gp.axes[3];
+    if (axe1 >= 0.9) {
+      console.log(` droite : ${axe1}`);
+    }
+    if (axe1 <= -0.9) {
+      console.log(`gauche : ${axe1}`);
+    }
+    if (axe2 >= 0.9) {
+      console.log(`bas : ${axe2}`);
+    }
+    if (axe2 <= -0.9) {
+      console.log(`haut : ${axe2}`);
+    }
+  }
+}
+
+// Fonction de la manette (a mettre dans la fonction draw)
 
 function GameObject() {
   this.x = 0;
@@ -307,6 +343,11 @@ function draw() {
     drawMap(gameMap);
     drawturgut();
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
+    if (joypadDetection == 1) {
+      Joypad();
+    } else {
+      joypadDetection == 0;
+    }
   }, 1000 / fps);
 }
 
@@ -322,13 +363,7 @@ window.addEventListener("gamepadconnected", function (e) {
   let axe2 = gp.axes[1];
   let axe3 = gp.axes[2];
   let axe4 = gp.axes[3];
-  setInterval(function () {
-    // ===> Get a fresh GamepadList! <===
-    var gp = navigator.getGamepads()[e.gamepad.index];
-    console.log(axe1);
-    if (axe1 <= 0.01) {
-      console.log(axe1);
-    }
+  setInterval(
   }, 100);
 });
 */
