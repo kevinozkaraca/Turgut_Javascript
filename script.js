@@ -59,23 +59,35 @@ window.addEventListener("gamepadconnected", function (detect) {
 // Fonction de la manette
 function Joypad() {
   let gp = navigator.getGamepads()[0];
+  leftPressed = false;
+  rightPressed = false;
+  upPressed = false;
+  downPressed = false;
   if (GamepadEvent) {
     joypadDetection = 1;
     let axe1 = gp.axes[0];
     let axe2 = gp.axes[1];
-    let axe3 = gp.axes[2];
-    let axe4 = gp.axes[3];
     if (axe1 >= 0.9) {
-      console.log(` droite : ${axe1}`);
+      rightPressed = true;
+      lastButtonPressed = "right";
     }
     if (axe1 <= -0.9) {
-      console.log(`gauche : ${axe1}`);
+      leftPressed = true;
+      lastButtonPressed = "left";
     }
     if (axe2 >= 0.9) {
-      console.log(`bas : ${axe2}`);
+      downPressed = true;
+      lastButtonPressed = "down";
     }
     if (axe2 <= -0.9) {
-      console.log(`haut : ${axe2}`);
+      upPressed = true;
+      lastButtonPressed = "up";
+    }
+    if (axe1 == 0 || axe2 == 0) {
+      leftPressed = false;
+      rightPressed = false;
+      upPressed = false;
+      downPressed = false;
     }
   }
 }
