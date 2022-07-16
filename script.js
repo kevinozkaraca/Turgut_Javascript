@@ -56,7 +56,7 @@ window.addEventListener("gamepadconnected", function (detect) {
     joypadDetection = 1;
   }
 });
-// Fonction de la manette
+// Fonction de la manette (dans la boucle du jeu)
 function Joypad() {
   let gp = navigator.getGamepads()[0];
   leftPressed = false;
@@ -67,19 +67,19 @@ function Joypad() {
     joypadDetection = 1;
     let axe1 = gp.axes[0];
     let axe2 = gp.axes[1];
-    if (axe1 >= 0.9) {
+    if (axe1 >= 0.7) {
       rightPressed = true;
       lastButtonPressed = "right";
     }
-    if (axe1 <= -0.9) {
+    if (axe1 <= -0.7) {
       leftPressed = true;
       lastButtonPressed = "left";
     }
-    if (axe2 >= 0.9) {
+    if (axe2 >= 0.7) {
       downPressed = true;
       lastButtonPressed = "down";
     }
-    if (axe2 <= -0.9) {
+    if (axe2 <= -0.7) {
       upPressed = true;
       lastButtonPressed = "up";
     }
@@ -91,8 +91,6 @@ function Joypad() {
     }
   }
 }
-
-// Fonction de la manette (a mettre dans la fonction draw)
 
 function GameObject() {
   this.x = 0;

@@ -2,21 +2,23 @@
 
 ### Présentation
 
-"The Legend Of Turgut" est un jeu coder en 🗡️ HTML 🏹 CSS 🪓 JAVASCRIPT sans framework en utilisant Canvas.
+"The Legend of Turgut" est un jeu coder en 🗡️ HTML 🏹 CSS 🪓 JAVASCRIPT sans framework en utilisant Canvas.
 
-En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous ce projet ludique. Un projet jeu qui me permet de coder mes enfants. J'ai utilisé Phaser.js, Pygame et Unity mais je suis revenu a une version en JavaScript qui est le language le plus utilisé lors de ma formation et je n'utilise aucun framework.
+En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous ce projet ludique. Un projet jeu qui me permet de coder régulièrement. J'ai utilisé Phaser.js, Pygame et Unity mais je suis revenu a une version en JavaScript qui est le language le plus utilisé lors de ma formation et je n'utilise aucun framework.
 
 <p align="center">
     <a href= "https://kevinozkaraca.github.io/Turgut_Javascript/"> ⚔️ Cliquer ici pour jouer ⚔️</a>
 </p>
 
-Le jeu vidéo est un moyen ludique et plaisant pour partager et faire découvrir la programmation. J'ai toujours aimé partager mes connaissances et j'espère que ce projet sucitera autant de plaisir au joueur que j'ai de plaisir à le concevoir !
+<p align="center">
+    ⬆️⬆️⬆️⬆️⬆️⬆️
+</p>
 
 ### Qui est Turgut ?
 
-Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs vivaient encore comme des nomades. L'idée d'en faire un jeu d'aventure est simple : La Turquie est un pays chargé d'histoire, le meilleur endroit pour un RPG (jeu d'aventure). Le choix des graphismes simples en pixel, qui rappel le retro gaming est la pour me faciliter la tache et pour que je me focalise surtout sur le code.
+Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs vivaient encore comme des nomades. L'idée d'en faire un jeu d'aventure est simple : La Turquie est un pays chargé d'histoire, le meilleur endroit pour un RPG (jeu d'aventure). Le choix des graphismes simples en pixel, qui rappel le retro gaming est la pour me faciliter la tache pour les graphismes et pour que je me focalise surtout sur le code.
 
-J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant à link dans le jeu The Legend of Zelda Une des grande référence du retro-gaming dans les jeux d'aventure. A l'époque, ce jeu se jouait avec une manette à deux boutons seulement et sans la possibilité de bouger en diagonal.
+J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant à link dans le jeu "The Legend of Zelda" Une des grande référence du retro-gaming dans les jeux d'aventure. A l'époque, ce jeu se jouait avec une manette à deux boutons seulement et sans la possibilité de bouger en diagonal.
 <br>
 
 ### L'équipe de travail
@@ -27,7 +29,7 @@ J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant �
             class="IMGlink"
             src="imagesReadme/equipeTurgut.jpg"
             alt="Photo de l'équipe de travail"
-            aria-label="Accedez à mes dépots Github"
+            aria-label="Photo de l'équipe de travail"
             width= 90%
         />
 </p>
