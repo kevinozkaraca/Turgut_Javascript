@@ -1,12 +1,25 @@
-// Cartes du jeu
-import { map7_7, mapWoodSword } from "./maps/maps.js";
-// Fonction responsive
-import { responsiveCanvas, ctx } from "./functions/responsiveCanvas.js";
-// Vitesse du rafraichissement
-let fps = 60;
+// Mise a jour de la taille du jeu (Responsive)
+let canvasResponsive = document.getElementById("canvasResponsive");
+let ctx = canvasResponsive.getContext("2d");
+let windowsWidthScreen = window.innerWidth;
+let windowHeightScreen = window.innerHeight;
+function responsiveCanvas() {
+  if (windowHeightScreen < windowsWidthScreen) {
+    let scaleHeight = `${(windowHeightScreen - 10) / 256}`;
+    canvasResponsive.width = 256 * scaleHeight;
+    canvasResponsive.height = 240 * scaleHeight;
+    ctx.scale(scaleHeight, scaleHeight);
+  } else {
+    let scaleWidth = `${(windowsWidthScreen - 10) / 256}`;
+    canvasResponsive.width = 256 * scaleWidth;
+    canvasResponsive.height = 240 * scaleWidth;
+    ctx.scale(scaleWidth, scaleWidth);
+  }
+}
 
 responsiveCanvas();
-
+// Vitesse du rafraichissement
+let fps = 60;
 // Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld1.png";
@@ -264,6 +277,23 @@ function drawturgut() {
     }
   }
 }
+let map7_7 = [
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [61, 61, 61, 61, 61, 61, 61, 2, 2, 61, 61, 61, 61, 61, 61, 61],
+  [61, 61, 61, 61, 28, 61, 62, 2, 2, 61, 61, 61, 61, 61, 61, 61],
+  [61, 61, 61, 62, 2, 2, 2, 2, 2, 61, 61, 61, 61, 61, 61, 61],
+  [61, 61, 62, 2, 2, 2, 2, 2, 2, 61, 61, 61, 61, 61, 61, 61],
+  [61, 62, 2, 2, 2, 2, 2, 2, 2, 60, 61, 61, 61, 61, 61, 61],
+  [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+  [43, 44, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 43, 43],
+  [61, 61, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 61, 61],
+  [61, 61, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 61, 61],
+  [61, 61, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 61, 61],
+  [61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61],
+];
 
 let objects7_7 = [];
 
@@ -277,7 +307,23 @@ gO.newturgutX = 120;
 gO.newturgutY = 220;
 gO.isPortal = true;
 objects7_7.push(gO);
-
+let mapWoodSword = [
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
+  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
+  [55, 55, 37, 37, 37, 37, 37, 28, 28, 37, 37, 37, 37, 37, 55, 55],
+  [55, 55, 55, 55, 55, 55, 55, 28, 28, 55, 55, 55, 55, 55, 55, 55],
+];
 let bundle = new MapBundle(map7_7, objects7_7);
 maps.push(bundle);
 let gameObjectsWoodSword = [];
