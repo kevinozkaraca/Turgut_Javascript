@@ -1,23 +1,11 @@
+"use strict";
+// Cartes du jeu
+import { map7_7, mapWoodSword } from "./maps/maps.js";
+// Fonction responsive
+import { responsiveCanvas, ctx } from "./functions/responsiveCanvas.js";
 // Vitesse du rafraichissement
 let fps = 60;
-// Mise a jour de la taille du jeu (Responsive)
-let canvasResponsive = document.getElementById("canvasResponsive");
-let ctx = canvasResponsive.getContext("2d");
-let windowsWidthScreen = window.innerWidth;
-let windowHeightScreen = window.innerHeight;
-function responsiveCanvas() {
-  if (windowHeightScreen < windowsWidthScreen) {
-    let scaleHeight = `${(windowHeightScreen - 10) / 256}`;
-    canvasResponsive.width = 256 * scaleHeight;
-    canvasResponsive.height = 240 * scaleHeight;
-    ctx.scale(scaleHeight, scaleHeight);
-  } else {
-    let scaleWidth = `${(windowsWidthScreen - 10) / 256}`;
-    canvasResponsive.width = 256 * scaleWidth;
-    canvasResponsive.height = 240 * scaleWidth;
-    ctx.scale(scaleWidth, scaleWidth);
-  }
-}
+
 responsiveCanvas();
 
 // Affichage du monde (découpage par la suite)
@@ -35,7 +23,7 @@ let lastButtonPressed = "down";
 // Position de départ du joueur
 let turgutY = 135;
 let turgutX = 116;
-// Image conteenant les images du personnage
+// Image contenant les images du personnage
 let turgut1 = new Image();
 turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
@@ -47,6 +35,7 @@ let joypadDetection = 0;
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
+// Bug une fois la manette en marche avec le clavier
 //Detection de la manette
 window.addEventListener("gamepadconnected", function (detect) {
   let gp = navigator.getGamepads()[detect.gamepad.index];
@@ -67,7 +56,14 @@ function Joypad() {
     joypadDetection = 1;
     let axe1 = gp.axes[0];
     let axe2 = gp.axes[1];
+    let axe3 = gp.axes[3];
+    let axe4 = gp.axes[2];
+
     if (axe1 >= 0.7) {
+      rightPressed = true;
+      lastButtonPressed = "right";
+    }
+    if (axe4 >= 0.7) {
       rightPressed = true;
       lastButtonPressed = "right";
     }
@@ -75,7 +71,15 @@ function Joypad() {
       leftPressed = true;
       lastButtonPressed = "left";
     }
+    if (axe4 <= -0.7) {
+      leftPressed = true;
+      lastButtonPressed = "left";
+    }
     if (axe2 >= 0.7) {
+      downPressed = true;
+      lastButtonPressed = "down";
+    }
+    if (axe3 >= 0.7) {
       downPressed = true;
       lastButtonPressed = "down";
     }
@@ -83,11 +87,61 @@ function Joypad() {
       upPressed = true;
       lastButtonPressed = "up";
     }
-    if (axe1 == 0 || axe2 == 0) {
-      leftPressed = false;
-      rightPressed = false;
-      upPressed = false;
-      downPressed = false;
+    if (axe3 <= -0.7) {
+      upPressed = true;
+      lastButtonPressed = "up";
+    }
+    if (gp.buttons[0].pressed == true) {
+      console.log("Button A");
+    }
+    if (gp.buttons[1].pressed == true) {
+      console.log("Button B");
+    }
+    if (gp.buttons[2].pressed == true) {
+      console.log("Button X");
+    }
+    if (gp.buttons[3].pressed == true) {
+      console.log("Button Y");
+    }
+    if (gp.buttons[4].pressed == true) {
+      console.log("Button LB");
+    }
+    if (gp.buttons[5].pressed == true) {
+      console.log("Button RB");
+    }
+    if (gp.buttons[6].pressed == true) {
+      console.log("Button LT");
+    }
+    if (gp.buttons[7].pressed == true) {
+      console.log("Button RT");
+    }
+    if (gp.buttons[8].pressed == true) {
+      console.log("Select");
+    }
+    if (gp.buttons[9].pressed == true) {
+      console.log("Start");
+    }
+    if (gp.buttons[10].pressed == true) {
+      console.log("Push sur la direction");
+    }
+    if (gp.buttons[11].pressed == true) {
+      console.log("Push sur l'iso");
+    }
+    if (gp.buttons[12].pressed == true) {
+      upPressed = true;
+      lastButtonPressed = "up";
+    }
+    if (gp.buttons[13].pressed == true) {
+      downPressed = true;
+      lastButtonPressed = "down";
+    }
+    if (gp.buttons[14].pressed == true) {
+      leftPressed = true;
+      lastButtonPressed = "left";
+    }
+    if (gp.buttons[15].pressed == true) {
+      rightPressed = true;
+      lastButtonPressed = "right";
     }
   }
 }
@@ -212,23 +266,6 @@ function drawturgut() {
   }
 }
 
-let map7_7 = [
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [61, 61, 61, 61, 61, 61, 61, 02, 02, 61, 61, 61, 61, 61, 61, 61],
-  [61, 61, 61, 61, 28, 61, 62, 02, 02, 61, 61, 61, 61, 61, 61, 61],
-  [61, 61, 61, 62, 02, 02, 02, 02, 02, 61, 61, 61, 61, 61, 61, 61],
-  [61, 61, 62, 02, 02, 02, 02, 02, 02, 61, 61, 61, 61, 61, 61, 61],
-  [61, 62, 02, 02, 02, 02, 02, 02, 02, 60, 61, 61, 61, 61, 61, 61],
-  [02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02],
-  [43, 44, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 43, 43],
-  [61, 61, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 61, 61],
-  [61, 61, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 02, 61, 61],
-  [61, 61, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 61, 61],
-  [61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61],
-];
 let objects7_7 = [];
 
 let gO = new GameObject();
@@ -244,24 +281,6 @@ objects7_7.push(gO);
 
 let bundle = new MapBundle(map7_7, objects7_7);
 maps.push(bundle);
-
-let mapWoodSword = [
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
-  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
-  [55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 55, 55],
-  [55, 55, 37, 37, 37, 37, 37, 28, 28, 37, 37, 37, 37, 37, 55, 55],
-  [55, 55, 55, 55, 55, 55, 55, 28, 28, 55, 55, 55, 55, 55, 55, 55],
-];
 let gameObjectsWoodSword = [];
 
 gO = new GameObject();
@@ -355,25 +374,8 @@ function draw() {
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
     if (joypadDetection == 1) {
       Joypad();
-    } else {
-      joypadDetection == 0;
     }
   }, 1000 / fps);
 }
 
 draw();
-/*
-// Fonction de la manette - A CORRIGER
-
-window.addEventListener("gamepadconnected", function (e) {
-  let gp = navigator.getGamepads()[e.gamepad.index];
-  console.log("Info : " + gp.id + " détécté avec " + gp.buttons.length + " buttons.");
-  console.log("Info : " + gp.id + " détécté avec " + gp.axes.length + " axes.");
-  let axe1 = gp.axes[0];
-  let axe2 = gp.axes[1];
-  let axe3 = gp.axes[2];
-  let axe4 = gp.axes[3];
-  setInterval(
-  }, 100);
-});
-*/

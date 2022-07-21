@@ -10,19 +10,39 @@
   font-family: "retro2";
   src: url(fontWeb/retro2.ttf);
 }
-
+body {
+  text-align: center;
+}
+header {
+  display: flex;
+  justify-content: center;
+}
+h1 {
+  font-family: "retro1";
+  font-size: x-large;
+  flex-wrap: wrap;
+  color: blue;
+  text-shadow: 2px 2px 0px white;
+}
+h2 {
+  font-family: "retro1";
+  font-size: x-large;
+  flex-wrap: wrap;
+  color: blue;
+  text-shadow: 2px 2px 0px white;
+}
 body {
   font-family: "retro2";
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  background-color: rgb(76, 74, 74);
+  background-color: rgb(159, 159, 159);
 }
 .gameScreenCenter {
-  background-color: rgb(76, 74, 74);
+  background-color: rgb(159, 159, 159);
 }
 canvas {
-  border: rgb(189, 189, 189) 3px solid;
+  border: rgb(159, 159, 159) 3px solid;
   background: rgb(0, 0, 0);
   image-rendering: pixelated;
   filter: contrast(110%);
