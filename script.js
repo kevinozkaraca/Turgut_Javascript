@@ -1,4 +1,3 @@
-"use strict";
 // Cartes du jeu
 import { map7_7, mapWoodSword } from "./maps/maps.js";
 // Fonction responsive
