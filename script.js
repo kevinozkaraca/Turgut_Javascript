@@ -1,22 +1,8 @@
 // Mise a jour de la taille du jeu (Responsive)
 let canvasResponsive = document.getElementById("canvasResponsive");
 let ctx = canvasResponsive.getContext("2d");
-let windowsWidthScreen = window.innerWidth;
-let windowHeightScreen = window.innerHeight;
-function responsiveCanvas() {
-  if (windowHeightScreen < windowsWidthScreen) {
-    let scaleHeight = `${(windowHeightScreen - 10) / 256}`;
-    canvasResponsive.width = 256 * scaleHeight;
-    canvasResponsive.height = 240 * scaleHeight;
-    ctx.scale(scaleHeight, scaleHeight);
-  } else {
-    let scaleWidth = `${(windowsWidthScreen - 10) / 256}`;
-    canvasResponsive.width = 256 * scaleWidth;
-    canvasResponsive.height = 240 * scaleWidth;
-    ctx.scale(scaleWidth, scaleWidth);
-  }
-}
 
+import responsiveCanvas from "./functions/responsiveCanvas.js";
 responsiveCanvas();
 // Vitesse du rafraichissement
 let fps = 60;
@@ -48,116 +34,8 @@ document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
 // Bug une fois la manette en marche avec le clavier
-//Detection de la manette
-window.addEventListener("gamepadconnected", function (detect) {
-  let gp = navigator.getGamepads()[detect.gamepad.index];
-  if (GamepadEvent) {
-    console.log("Info : " + gp.id + " détécté avec " + gp.buttons.length + " buttons.");
-    console.log("Info : " + gp.id + " détécté avec " + gp.axes.length + " axes.");
-    joypadDetection = 1;
-  }
-});
-// Fonction de la manette (dans la boucle du jeu)
-function Joypad() {
-  let gp = navigator.getGamepads()[0];
-  leftPressed = false;
-  rightPressed = false;
-  upPressed = false;
-  downPressed = false;
-  if (GamepadEvent) {
-    joypadDetection = 1;
-    let axe1 = gp.axes[0];
-    let axe2 = gp.axes[1];
-    let axe3 = gp.axes[3];
-    let axe4 = gp.axes[2];
 
-    if (axe1 >= 0.7) {
-      rightPressed = true;
-      lastButtonPressed = "right";
-    }
-    if (axe4 >= 0.7) {
-      rightPressed = true;
-      lastButtonPressed = "right";
-    }
-    if (axe1 <= -0.7) {
-      leftPressed = true;
-      lastButtonPressed = "left";
-    }
-    if (axe4 <= -0.7) {
-      leftPressed = true;
-      lastButtonPressed = "left";
-    }
-    if (axe2 >= 0.7) {
-      downPressed = true;
-      lastButtonPressed = "down";
-    }
-    if (axe3 >= 0.7) {
-      downPressed = true;
-      lastButtonPressed = "down";
-    }
-    if (axe2 <= -0.7) {
-      upPressed = true;
-      lastButtonPressed = "up";
-    }
-    if (axe3 <= -0.7) {
-      upPressed = true;
-      lastButtonPressed = "up";
-    }
-    if (gp.buttons[0].pressed == true) {
-      console.log("Button A");
-    }
-    if (gp.buttons[1].pressed == true) {
-      console.log("Button B");
-    }
-    if (gp.buttons[2].pressed == true) {
-      console.log("Button X");
-    }
-    if (gp.buttons[3].pressed == true) {
-      console.log("Button Y");
-    }
-    if (gp.buttons[4].pressed == true) {
-      console.log("Button LB");
-    }
-    if (gp.buttons[5].pressed == true) {
-      console.log("Button RB");
-    }
-    if (gp.buttons[6].pressed == true) {
-      console.log("Button LT");
-    }
-    if (gp.buttons[7].pressed == true) {
-      console.log("Button RT");
-    }
-    if (gp.buttons[8].pressed == true) {
-      console.log("Select");
-    }
-    if (gp.buttons[9].pressed == true) {
-      console.log("Start");
-    }
-    if (gp.buttons[10].pressed == true) {
-      console.log("Push sur la direction");
-    }
-    if (gp.buttons[11].pressed == true) {
-      console.log("Push sur l'iso");
-    }
-    if (gp.buttons[12].pressed == true) {
-      upPressed = true;
-      lastButtonPressed = "up";
-    }
-    if (gp.buttons[13].pressed == true) {
-      downPressed = true;
-      lastButtonPressed = "down";
-    }
-    if (gp.buttons[14].pressed == true) {
-      leftPressed = true;
-      lastButtonPressed = "left";
-    }
-    if (gp.buttons[15].pressed == true) {
-      rightPressed = true;
-      lastButtonPressed = "right";
-    }
-  }
-}
-
+// Coupe la manette en inactivité
 function GameObject() {
   this.x = 0;
   this.y = 0;
@@ -288,7 +166,7 @@ let map7_7 = [
   [61, 61, 62, 2, 2, 2, 2, 2, 2, 61, 61, 61, 61, 61, 61, 61],
   [61, 62, 2, 2, 2, 2, 2, 2, 2, 60, 61, 61, 61, 61, 61, 61],
   [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-  [43, 44, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 43, 43],
+  [43, 44, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 42, 43],
   [61, 61, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 61, 61],
   [61, 61, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 61, 61],
   [61, 61, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 43, 61, 61],
@@ -360,14 +238,14 @@ function drawMap(level) {
     for (let j = 0; j < level[i].length; j++) {
       ctx.drawImage(
         worldTiles,
-        (level[i][j] % 18) * 17 + 1,
-        Math.floor(level[i][j] / 18) * 17 + 1,
+        (level[i][j] % 18) * 17 + 1.5,
+        Math.floor(level[i][j] / 18) * 17 + 1.5,
         16,
         16,
         j * 16,
         i * 16,
-        16,
-        16
+        17,
+        17
       );
     }
   }
@@ -417,9 +295,6 @@ function draw() {
     drawMap(gameMap);
     drawturgut();
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
-    if (joypadDetection == 1) {
-      Joypad();
-    }
   }, 1000 / fps);
 }
 

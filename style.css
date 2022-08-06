@@ -45,8 +45,7 @@ canvas {
   border: rgb(159, 159, 159) 3px solid;
   background: rgb(0, 0, 0);
   image-rendering: pixelated;
-  filter: contrast(110%);
-  filter: brightness(0.9);
+
   display: block;
   margin: auto;
 }
