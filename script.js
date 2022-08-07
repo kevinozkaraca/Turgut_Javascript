@@ -4,6 +4,7 @@ import { ctx } from "./functions/responsiveCanvas.js";
 responsiveCanvas();
 // Vitesse du rafraichissement
 let fps = 60;
+ctx.imageSmoothingEnabled = false;
 // Affichage du monde (découpage par la suite)
 let worldTiles = new Image();
 worldTiles.src = "./gameImages/tiles-overworld1.png";
