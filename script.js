@@ -1,8 +1,7 @@
+import responsiveCanvas from "./functions/responsiveCanvas.js";
 // Mise a jour de la taille du jeu (Responsive)
 let canvasResponsive = document.getElementById("canvasResponsive");
 let ctx = canvasResponsive.getContext("2d");
-
-import responsiveCanvas from "./functions/responsiveCanvas.js";
 responsiveCanvas();
 // Vitesse du rafraichissement
 let fps = 60;
