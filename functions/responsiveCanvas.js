@@ -1,5 +1,6 @@
 let canvasResponsive = document.getElementById("canvasResponsive");
 let ctx = canvasResponsive.getContext("2d");
+
 let windowsWidthScreen = window.innerWidth;
 let windowHeightScreen = window.innerHeight;
 function responsiveCanvas() {
@@ -15,5 +16,5 @@ function responsiveCanvas() {
     ctx.scale(scaleWidth, scaleWidth);
   }
 }
-
+export { canvasResponsive, ctx };
 export default responsiveCanvas;

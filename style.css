@@ -45,7 +45,8 @@ canvas {
   border: rgb(159, 159, 159) 3px solid;
   background: rgb(0, 0, 0);
   image-rendering: pixelated;
-
+  image-rendering: optimizeSpeed;
+  font-family: "retro2";
   display: block;
   margin: auto;
 }

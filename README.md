@@ -14,6 +14,17 @@ En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous
     ⬆️⬆️⬆️⬆️⬆️⬆️
 </p>
 
+<p align="center">
+<br>
+<img 
+            class="IMGlink"
+            src="imagesReadme/turgutPaper.jpg"
+            alt="Image du Turgut"
+            aria-label="Image du Turgut"
+            width= 90%
+        />
+</p>
+
 ### Qui est Turgut ?
 
 Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs vivaient encore comme des nomades. L'idée d'en faire un jeu d'aventure est simple : La Turquie est un pays chargé d'histoire, le meilleur endroit pour un RPG (jeu d'aventure). Le choix des graphismes simples en pixel, qui rappel le retro gaming est la pour me faciliter la tache pour les graphismes et pour que je me focalise surtout sur le code.

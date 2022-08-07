@@ -1,7 +1,6 @@
 import responsiveCanvas from "./functions/responsiveCanvas.js";
+import { ctx } from "./functions/responsiveCanvas.js";
 // Mise a jour de la taille du jeu (Responsive)
-let canvasResponsive = document.getElementById("canvasResponsive");
-let ctx = canvasResponsive.getContext("2d");
 responsiveCanvas();
 // Vitesse du rafraichissement
 let fps = 60;
@@ -26,7 +25,16 @@ turgut1.src = "./playerImages/turgut1.png";
 let gameObjects = [];
 let maps = [];
 let gameMap = null;
+let hud = new Image();
+hud.src = "./gameImages/pauseScreen.png";
+let chars1 = new Image();
+chars1.src = "./gameImages/pnjs1.png";
+let chars2 = new Image();
+chars2.src = "./gameImages/pnjs2.png";
+let retroFont = new FontFace("retroFont", "./fontWeb/retro2.ttf");
 let joypadDetection = 0;
+let lastPickUpItem = 0;
+let playPickupItemAnimation = false;
 
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
@@ -34,7 +42,6 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 // Bug une fois la manette en marche avec le clavier
 
-// Coupe la manette en inactivité
 function GameObject() {
   this.x = 0;
   this.y = 0;
@@ -44,6 +51,19 @@ function GameObject() {
   this.newturgutX = 0;
   this.newturgutY = 0;
   this.isPortal = false;
+  this.counter = 0;
+  this.imageNum = 0;
+  this.isText = false;
+  this.line1Current = "";
+  this.line2Current = "";
+  this.line1X = 0;
+  this.line1Y = 0;
+  this.line2X = 0;
+  this.line2Y = 0;
+  this.isOldMan = false;
+  this.isPickUpItem = false;
+  this.pickUpItemNum = 0;
+  this.isFlame = false;
 }
 
 function MapBundle(m, o) {
@@ -172,8 +192,6 @@ let map7_7 = [
   [61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61, 61],
 ];
 
-let objects7_7 = [];
-
 let gO = new GameObject();
 gO.x = 72;
 gO.y = 72;
@@ -183,7 +201,12 @@ gO.newMap = 1;
 gO.newturgutX = 120;
 gO.newturgutY = 220;
 gO.isPortal = true;
+let objects7_7 = [];
 objects7_7.push(gO);
+
+let bundle = new MapBundle(map7_7, objects7_7);
+maps.push(bundle);
+
 let mapWoodSword = [
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
@@ -201,10 +224,46 @@ let mapWoodSword = [
   [55, 55, 37, 37, 37, 37, 37, 28, 28, 37, 37, 37, 37, 37, 55, 55],
   [55, 55, 55, 55, 55, 55, 55, 28, 28, 55, 55, 55, 55, 55, 55, 55],
 ];
-let bundle = new MapBundle(map7_7, objects7_7);
-maps.push(bundle);
 let gameObjectsWoodSword = [];
 
+gO = new GameObject();
+gO.x = 4 * 16 + 8;
+gO.y = 8 * 16;
+gO.width = 16;
+gO.height = 16;
+gO.newMap = 0;
+gO.newturgutX = 68;
+gO.newturgutY = 96;
+gO.isPortal = true;
+gameObjectsWoodSword.push(gO);
+
+gO = new GameObject();
+gO.x = 10 * 16 + 8;
+gO.y = 8 * 16;
+gO.width = 16;
+gO.height = 16;
+gO.isFlame = true;
+gameObjectsWoodSword.push(gO);
+
+gO = new GameObject();
+gO.x = 7 * 16 + 8;
+gO.y = 8 * 16;
+gO.width = 16;
+gO.height = 16;
+gO.isOldMan = true;
+gameObjectsWoodSword.push(gO);
+
+gO = new GameObject();
+gO.isText = true;
+gO.line1Full = "JE JE... Heu !";
+gO.line2Full = "C'est QUOI MON TEXTE ?!";
+gO.line1X = 3 * 16;
+gO.line1Y = 7 * 16;
+gO.line2X = 4 * 16;
+gO.line2Y = 8 * 16 - 6;
+gameObjectsWoodSword.push(gO);
+
+///Portal variables
 gO = new GameObject();
 gO.x = 112;
 gO.y = 240;
@@ -225,6 +284,16 @@ gO.newMap = 0;
 gO.newturgutX = 68;
 gO.newturgutY = 96;
 gO.isPortal = true;
+gameObjectsWoodSword.push(gO);
+
+//sword
+gO = new GameObject();
+gO.x = 8 * 16 - 4;
+gO.y = 9.5 * 16;
+gO.width = 8;
+gO.height = 16;
+gO.isPickUpItem = true;
+gO.pickUpItemNum = 14;
 gameObjectsWoodSword.push(gO);
 
 bundle = new MapBundle(mapWoodSword, gameObjectsWoodSword);
@@ -283,6 +352,104 @@ function gameObjectCollision(x, y, objects, isturgut) {
   }
 }
 
+function drawGameObjects() {
+  for (let i = 0; i < gameObjects.length; i++) {
+    if (gameObjects[i].isPickUpItem) {
+      ///There are a number of pick up items. The first 8 are selectable within
+      /// the inventory screen. The following 6 sit on top of the selectable inventory
+      /// and are automatically equipped and used by link.
+      //0 - boomerang
+      //1 - bomb
+      //2 - bow and arrow
+      //3 - candle
+      //4 - flute
+      //5 - meat
+      //6 - potion(red or blue)
+      //7 - magic rod
+      //8 - raft
+      //9 - book of magic
+      //10 - ring
+      //11 - ladder
+      //12 - key
+      //13 - bracelet
+      //14 - wood sword
+      switch (gameObjects[i].pickUpItemNum) {
+        case 0:
+          break;
+        case 1:
+          break;
+        case 2:
+          break;
+        case 3:
+          break;
+        case 4:
+          break;
+        case 5:
+          break;
+        case 6:
+          break;
+        case 7:
+          break;
+        case 8:
+          break;
+        case 9:
+          break;
+        case 10:
+          break;
+        case 11:
+          break;
+        case 12:
+          break;
+        case 13:
+          // épée bois
+          ctx.drawImage(hud, 555, 137, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
+          break;
+        case 14:
+          //Arc
+          ctx.drawImage(hud, 633, 137, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
+
+          break;
+      }
+    }
+    if (gameObjects[i].isText) {
+      gameObjects[i].counter += 1;
+      if (gameObjects[i].counter % 5 == 0) {
+        if (gameObjects[i].line1Full.length != gameObjects[i].line1Current.length) {
+          gameObjects[i].line1Current = gameObjects[i].line1Full.substring(0, gameObjects[i].line1Current.length + 1);
+        } else if (gameObjects[i].line2Full.length != gameObjects[i].line2Current.length) {
+          gameObjects[i].line2Current = gameObjects[i].line2Full.substring(0, gameObjects[i].line2Current.length + 1);
+        }
+      }
+
+      ctx.fillStyle = "white";
+      ctx.font = `10px retro2`;
+
+      ctx.fillText(gameObjects[i].line1Current, gameObjects[i].line1X, gameObjects[i].line1Y);
+      ctx.fillText(gameObjects[i].line2Current, gameObjects[i].line2X, gameObjects[i].line2Y);
+    }
+    if (gameObjects[i].isFlame) {
+      gameObjects[i].counter += 1;
+      if (gameObjects[i].counter % 5 == 0) {
+        gameObjects[i].imageNum += 1;
+      }
+      if (gameObjects[i].imageNum > 1) {
+        gameObjects[i].imageNum = 0;
+      }
+      if (gameObjects[i].imageNum == 0) {
+        ctx.drawImage(chars2, 158, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+      } else {
+        ctx.drawImage(chars1, 52, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+      }
+    }
+    if (gameObjects[i].isOldMan) {
+      ctx.drawImage(chars1, 1, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+    }
+    if (gameObjects[i].isOldWoman) {
+      ctx.drawImage(chars1, 35, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+    }
+  }
+}
+
 // Fonction d'affichage du jeu
 function draw() {
   setTimeout(function () {
@@ -294,6 +461,7 @@ function draw() {
     drawMap(gameMap);
     drawturgut();
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
+    drawGameObjects();
   }, 1000 / fps);
 }
 
