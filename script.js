@@ -35,7 +35,10 @@ chars2.src = "./gameImages/pnjs2.png";
 let retroFont = new FontFace("retroFont", "./fontWeb/retro2.ttf");
 let joypadDetection = 0;
 let lastPickUpItem = 0;
-let playPickupItemAnimation = false;
+let playPickUpItemAnimation = false;
+// Son et music
+let BGMturgut = new Audio("./music/BGM.wav");
+let pickUpItemSound = new Audio("./music/pickUpItemSound.wav");
 
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
@@ -49,12 +52,15 @@ function GameObject() {
   this.width = 0;
   this.height = 0;
   this.newMap = 0;
-  this.newturgutX = 0;
-  this.newturgutY = 0;
+  this.newLinkX = -1;
+  this.newLinkY = -1;
   this.isPortal = false;
+  //added after this comment
   this.counter = 0;
   this.imageNum = 0;
   this.isText = false;
+  this.line1Full = "";
+  this.line2Full = "";
   this.line1Current = "";
   this.line2Current = "";
   this.line1X = 0;
@@ -65,6 +71,8 @@ function GameObject() {
   this.isPickUpItem = false;
   this.pickUpItemNum = 0;
   this.isFlame = false;
+  this.isOldWoman = false;
+  this.pickUpItemName = "";
 }
 
 function MapBundle(m, o) {
@@ -103,78 +111,136 @@ function keyUpHandler(e) {
 function drawturgut() {
   let speed = 2;
   animationCounter++;
-
-  if (leftPressed && !collision(turgutX - speed, turgutY, gameMap)) {
-    turgutX -= speed;
-    if (currentAnimation == 0) {
-      ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
-    } else if (currentAnimation == 1) {
-      ctx.drawImage(turgut1, 30, 30, 16, 16, turgutX, turgutY, 16, 16);
+  if (playPickUpItemAnimation) {
+    console.log("play pickupanimation");
+    animationCounter++;
+    if (animationCounter < 300) {
+      ctx.drawImage(turgut1, 1, 150, 16, 16, turgutX, turgutY, 16, 16);
+    } else {
+      playPickUpItemAnimation = false;
     }
-    if (animationCounter >= 6) {
-      currentAnimation++;
-      animationCounter = 0;
-      if (currentAnimation > 1) {
-        currentAnimation = 0;
-      }
-    }
-  } else if (rightPressed & !collision(turgutX + speed, turgutY, gameMap)) {
-    turgutX += speed;
-    if (currentAnimation == 0) {
-      ctx.drawImage(turgut1, 91, 0, 16, 16, turgutX, turgutY, 16, 16);
-    } else if (currentAnimation == 1) {
-      ctx.drawImage(turgut1, 91, 30, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (animationCounter >= 6) {
-      currentAnimation++;
-      animationCounter = 0;
-      if (currentAnimation > 1) {
-        currentAnimation = 0;
-      }
-    }
-  } else if (upPressed & !collision(turgutX, turgutY - speed, gameMap)) {
-    turgutY -= speed;
-    if (currentAnimation == 0) {
-      ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
-    } else if (currentAnimation == 1) {
-      ctx.drawImage(turgut1, 62, 30, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (animationCounter >= 6) {
-      currentAnimation++;
-      animationCounter = 0;
-      if (currentAnimation > 1) {
-        currentAnimation = 0;
-      }
-    }
-  } else if (downPressed & !collision(turgutX, turgutY + speed, gameMap)) {
-    turgutY += speed;
-    if (currentAnimation == 0) {
-      ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
-    } else if (currentAnimation == 1) {
-      ctx.drawImage(turgut1, 0, 30, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (animationCounter >= 6) {
-      currentAnimation++;
-      animationCounter = 0;
-      if (currentAnimation > 1) {
-        currentAnimation = 0;
-      }
+    //0 - boomerang
+    //1 - bomb
+    //2 - bow and arrow
+    //3 - candle
+    //4 - flute
+    //5 - meat
+    //6 - potion(red or blue)
+    //7 - magic rod
+    //8 - raft
+    //9 - book of magic
+    //10 - ring
+    //11 - ladder
+    //12 - key
+    //13 - bracelet
+    //14 - wood sword
+    switch (lastPickUpItem) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        break;
+      case 9:
+        break;
+      case 10:
+        break;
+      case 11:
+        break;
+      case 12:
+        break;
+      case 13:
+        break;
+      case 14:
+        ctx.drawImage(hud, 555, 137, 8, 16, turgutX - 2, turgutY - 14, 8, 16);
+        break;
     }
   } else {
-    if (lastButtonPressed == "down") {
-      ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (lastButtonPressed == "up") {
-      ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (lastButtonPressed == "left") {
-      ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
-    }
-    if (lastButtonPressed == "right") {
-      ctx.drawImage(turgut1, 91, 30, 16, 16, turgutX, turgutY, 16, 16);
+    if (leftPressed && !collision(turgutX - speed, turgutY, gameMap)) {
+      turgutX -= speed;
+      if (currentAnimation == 0) {
+        ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
+      } else if (currentAnimation == 1) {
+        ctx.drawImage(turgut1, 30, 30, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (animationCounter >= 6) {
+        currentAnimation++;
+        animationCounter = 0;
+        if (currentAnimation > 1) {
+          currentAnimation = 0;
+        }
+      }
+    } else if (rightPressed & !collision(turgutX + speed, turgutY, gameMap)) {
+      turgutX += speed;
+      if (currentAnimation == 0) {
+        ctx.drawImage(turgut1, 91, 0, 16, 16, turgutX, turgutY, 16, 16);
+      } else if (currentAnimation == 1) {
+        ctx.drawImage(turgut1, 91, 30, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (animationCounter >= 6) {
+        currentAnimation++;
+        animationCounter = 0;
+        if (currentAnimation > 1) {
+          currentAnimation = 0;
+        }
+      }
+    } else if (upPressed & !collision(turgutX, turgutY - speed, gameMap)) {
+      turgutY -= speed;
+      if (currentAnimation == 0) {
+        ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
+      } else if (currentAnimation == 1) {
+        ctx.drawImage(turgut1, 62, 30, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (animationCounter >= 6) {
+        currentAnimation++;
+        animationCounter = 0;
+        if (currentAnimation > 1) {
+          currentAnimation = 0;
+        }
+      }
+    } else if (downPressed & !collision(turgutX, turgutY + speed, gameMap)) {
+      turgutY += speed;
+      if (currentAnimation == 0) {
+        ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
+      } else if (currentAnimation == 1) {
+        ctx.drawImage(turgut1, 0, 30, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (animationCounter >= 6) {
+        currentAnimation++;
+        animationCounter = 0;
+        if (currentAnimation > 1) {
+          currentAnimation = 0;
+        }
+      }
+    } else {
+      if (lastButtonPressed == "down") {
+        ctx.drawImage(turgut1, 0, 0, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (lastButtonPressed == "up") {
+        ctx.drawImage(turgut1, 62, 0, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (lastButtonPressed == "left") {
+        ctx.drawImage(turgut1, 30, 0, 16, 16, turgutX, turgutY, 16, 16);
+      }
+      if (lastButtonPressed == "right") {
+        ctx.drawImage(turgut1, 91, 0, 16, 16, turgutX, turgutY, 16, 16);
+      }
     }
   }
 }
+
 let map7_7 = [
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
   [22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22, 22],
@@ -256,8 +322,8 @@ gameObjectsWoodSword.push(gO);
 
 gO = new GameObject();
 gO.isText = true;
-gO.line1Full = "JE JE... Heu !";
-gO.line2Full = "C'est QUOI MON TEXTE ?!";
+gO.line1Full = "PREND CETTE EPEE !";
+gO.line2Full = "CAR IL FAIT FROID ?!";
 gO.line1X = 3 * 16;
 gO.line1Y = 7 * 16;
 gO.line2X = 4 * 16;
@@ -348,6 +414,105 @@ function gameObjectCollision(x, y, objects, isturgut) {
           turgutX = objects[i].newturgutX;
           turgutY = objects[i].newturgutY;
         }
+
+        if (objects[i].isPickUpItem) {
+          playPickUpItemAnimation = true;
+          let swordEquipped = 0;
+          switch (gameObjects[i].pickUpItemNum) {
+            case 0:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 1:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 2:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 3:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 4:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 5:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 6:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 7:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 8:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 9:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 10:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 11:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 12:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 13:
+              gO = new GameObject();
+              gO.pickUpItemNum = gameObjects[i].pickUpItemNum;
+              inventoryItems[gameObjects[i].pickUpItemNum] = gO;
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              break;
+            case 14:
+              lastPickUpItem = gameObjects[i].pickUpItemNum;
+              swordEquipped = 1;
+              animationCounter = 0;
+              pickUpItemSound.play();
+          }
+
+          objects.splice(i, 1);
+          animationCounter = 0;
+        }
       }
     }
   }
@@ -356,24 +521,6 @@ function gameObjectCollision(x, y, objects, isturgut) {
 function drawGameObjects() {
   for (let i = 0; i < gameObjects.length; i++) {
     if (gameObjects[i].isPickUpItem) {
-      ///There are a number of pick up items. The first 8 are selectable within
-      /// the inventory screen. The following 6 sit on top of the selectable inventory
-      /// and are automatically equipped and used by link.
-      //0 - boomerang
-      //1 - bomb
-      //2 - bow and arrow
-      //3 - candle
-      //4 - flute
-      //5 - meat
-      //6 - potion(red or blue)
-      //7 - magic rod
-      //8 - raft
-      //9 - book of magic
-      //10 - ring
-      //11 - ladder
-      //12 - key
-      //13 - bracelet
-      //14 - wood sword
       switch (gameObjects[i].pickUpItemNum) {
         case 0:
           break;
@@ -402,13 +549,12 @@ function drawGameObjects() {
         case 12:
           break;
         case 13:
-          // épée bois
-          ctx.drawImage(hud, 555, 137, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
-          break;
-        case 14:
           //Arc
           ctx.drawImage(hud, 633, 137.1, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
-
+          break;
+        case 14:
+          // épée bois
+          ctx.drawImage(hud, 633, 137.1, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
           break;
       }
     }
@@ -463,6 +609,8 @@ function draw() {
     drawturgut();
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
     drawGameObjects();
+    // Music insuportable du jeu
+    BGMturgut.play();
   }, 1000 / fps);
 }
 
