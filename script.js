@@ -407,7 +407,7 @@ function drawGameObjects() {
           break;
         case 14:
           //Arc
-          ctx.drawImage(hud, 633, 137, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
+          ctx.drawImage(hud, 633, 137.1, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
 
           break;
       }
@@ -437,16 +437,16 @@ function drawGameObjects() {
         gameObjects[i].imageNum = 0;
       }
       if (gameObjects[i].imageNum == 0) {
-        ctx.drawImage(chars2, 158, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+        ctx.drawImage(chars2, 158, 11.1, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
       } else {
-        ctx.drawImage(chars1, 52, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+        ctx.drawImage(chars1, 52, 11.1, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
       }
     }
     if (gameObjects[i].isOldMan) {
-      ctx.drawImage(chars1, 1, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+      ctx.drawImage(chars1, 1, 11.1, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
     }
     if (gameObjects[i].isOldWoman) {
-      ctx.drawImage(chars1, 35, 11, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
+      ctx.drawImage(chars1, 35, 11.1, 16, 16, gameObjects[i].x, gameObjects[i].y, 16, 16);
     }
   }
 }

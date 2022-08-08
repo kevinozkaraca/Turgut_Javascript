@@ -43,8 +43,8 @@ h2 {
 canvas {
   border: rgb(159, 159, 159) 3px solid;
   background: rgb(0, 0, 0);
+  image-rendering: pixelated;
 
-  image-resolution: 100%;
   font-family: "retro2";
   display: block;
   margin: auto;
