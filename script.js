@@ -20,11 +20,9 @@ let lastButtonPressed = "down";
 // Position de départ du joueur
 let turgutY = 135;
 let turgutX = 116;
-// Image contenant les images du personnage
+// Images
 let turgut1 = new Image();
 turgut1.src = "./playerImages/turgut1.png";
-let gameObjects = [];
-let maps = [];
 let gameMap = null;
 let hud = new Image();
 hud.src = "./gameImages/pauseScreen.png";
@@ -34,17 +32,26 @@ let chars2 = new Image();
 chars2.src = "./gameImages/pnjs2.png";
 let retroFont = new FontFace("retroFont", "./fontWeb/retro2.ttf");
 let joypadDetection = 0;
+// gestion du menu entete
 let lastPickUpItem = 0;
 let playPickUpItemAnimation = false;
+let rupeeAmount = 0;
+let linkHearts = 5;
+let currentLinkHearts = 2.5;
+let keyAmount = 1;
+let bombAmount = 5;
+let swordEquipped = 0;
 // Son et music
 let BGMturgut = new Audio("./music/BGM.wav");
 let pickUpItemSound = new Audio("./music/pickUpItemSound.wav");
-
+// Tableau des cartes du jeu
+let gameObjects = [];
+let maps = [];
 // Fonction de base du clavier
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
-// Bug une fois la manette en marche avec le clavier
+// Mettre la fonction de la manette ici
 
 function GameObject() {
   this.x = 0;
@@ -55,7 +62,6 @@ function GameObject() {
   this.newLinkX = -1;
   this.newLinkY = -1;
   this.isPortal = false;
-  //added after this comment
   this.counter = 0;
   this.imageNum = 0;
   this.isText = false;
@@ -322,15 +328,14 @@ gameObjectsWoodSword.push(gO);
 
 gO = new GameObject();
 gO.isText = true;
-gO.line1Full = "PREND CETTE EPEE !";
-gO.line2Full = "CAR IL FAIT FROID ?!";
+gO.line1Full = "C'EST UNE COPIE DE ZELDA !";
+gO.line2Full = "TU N'AS PAS HONTE ?!";
 gO.line1X = 3 * 16;
 gO.line1Y = 7 * 16;
 gO.line2X = 4 * 16;
 gO.line2Y = 8 * 16 - 6;
 gameObjectsWoodSword.push(gO);
 
-///Portal variables
 gO = new GameObject();
 gO.x = 112;
 gO.y = 240;
@@ -417,7 +422,6 @@ function gameObjectCollision(x, y, objects, isturgut) {
 
         if (objects[i].isPickUpItem) {
           playPickUpItemAnimation = true;
-          let swordEquipped = 0;
           switch (gameObjects[i].pickUpItemNum) {
             case 0:
               gO = new GameObject();
@@ -508,6 +512,7 @@ function gameObjectCollision(x, y, objects, isturgut) {
               swordEquipped = 1;
               animationCounter = 0;
               pickUpItemSound.play();
+              console.log("épée équipé");
           }
 
           objects.splice(i, 1);
@@ -517,7 +522,11 @@ function gameObjectCollision(x, y, objects, isturgut) {
     }
   }
 }
-
+function playSound(source) {
+  let sound = new Audio();
+  sound.src = source;
+  sound.play();
+}
 function drawGameObjects() {
   for (let i = 0; i < gameObjects.length; i++) {
     if (gameObjects[i].isPickUpItem) {
@@ -550,11 +559,11 @@ function drawGameObjects() {
           break;
         case 13:
           //Arc
-          ctx.drawImage(hud, 633, 137.1, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
+          ctx.drawImage(hud, 633, 137.1, 8, 15.9, gameObjects[i].x, gameObjects[i].y, 8, 16);
           break;
         case 14:
           // épée bois
-          ctx.drawImage(hud, 633, 137.1, 8, 16, gameObjects[i].x, gameObjects[i].y, 8, 16);
+          ctx.drawImage(hud, 555, 137.1, 8, 15.9, gameObjects[i].x, gameObjects[i].y, 8, 16);
           break;
       }
     }
@@ -563,8 +572,10 @@ function drawGameObjects() {
       if (gameObjects[i].counter % 5 == 0) {
         if (gameObjects[i].line1Full.length != gameObjects[i].line1Current.length) {
           gameObjects[i].line1Current = gameObjects[i].line1Full.substring(0, gameObjects[i].line1Current.length + 1);
+          playSound("./music/textSound.wav");
         } else if (gameObjects[i].line2Full.length != gameObjects[i].line2Current.length) {
           gameObjects[i].line2Current = gameObjects[i].line2Full.substring(0, gameObjects[i].line2Current.length + 1);
+          playSound("./music/textSound.wav");
         }
       }
 
@@ -596,6 +607,84 @@ function drawGameObjects() {
     }
   }
 }
+// Fontion du menu entete
+function drawHUD() {
+  ctx.drawImage(hud, 258, 11, 256, 56, 0, 0, 256, 56);
+
+  ctx.fillStyle = "black";
+  ctx.fillRect(175.9, 31.9, 64.1, 18);
+
+  let fullHearts = Math.floor(currentLinkHearts);
+  let halfHearts = currentLinkHearts - fullHearts;
+
+  for (let i = 0; i < linkHearts; i++) {
+    let heartY = 40;
+    let heartX = 176 + i * 8;
+    if (i > 7) {
+      heartY = 40 - 8;
+      heartX -= 64;
+    }
+    ctx.drawImage(hud, 627, 117, 8, 8, heartX, heartY, 8, 8);
+  }
+  let halfHeartX = 0;
+  let halfHeartY = 0;
+  for (let i = 0; i < fullHearts; i++) {
+    let heartY = 40;
+    let heartX = 176 + i * 8;
+    if (i > 7) {
+      heartY = 40 - 8;
+      heartX -= 64;
+    }
+    ctx.drawImage(hud, 645, 117, 8, 8, heartX, heartY, 8, 8);
+    if (i == fullHearts - 1) {
+      if (i > 6) {
+        halfHeartY = 40 - 8;
+        halfHeartX = 176 + (i % 7) * 8;
+      } else {
+        halfHeartY = 40;
+        halfHeartX = 176 + i * 8 + 8;
+      }
+    }
+  }
+  if (halfHearts > 0 && fullHearts >= 1) {
+    ctx.drawImage(hud, 636, 117, 8, 8, halfHeartX, halfHeartY, 8, 8);
+  } else if (halfHearts > 0 && fullHearts == 0) {
+    ctx.drawImage(hud, 636, 117, 8, 8, 176, 40, 8, 8);
+  }
+  ctx.fillStyle = "black";
+  ctx.fillRect(96, 10, 24, 50);
+
+  if (rupeeAmount < 100) {
+    ctx.drawImage(hud, 519, 117, 8, 8, 96, 16, 8, 8);
+    let firstNum = rupeeAmount % 10;
+    ctx.drawImage(hud, 528 + 8 * firstNum + firstNum, 117, 8, 8, 96 + 16, 16, 8, 8);
+    let secondNum = Math.floor(rupeeAmount / 10);
+    ctx.drawImage(hud, 528 + 8 * secondNum + secondNum, 117, 8, 8, 96 + 8, 16, 8, 8);
+  } else {
+    let firstNum = rupeeAmount % 10;
+    ctx.drawImage(hud, 528 + 8 * firstNum + firstNum, 117, 8, 8, 96 + 16, 16, 8, 8);
+    let thirdNum = Math.floor(rupeeAmount / 100) * 100;
+    let secondNum = (rupeeAmount - thirdNum - firstNum) / 10;
+    ctx.drawImage(hud, 528 + 8 * secondNum + secondNum, 117, 8, 8, 96 + 8, 16, 8, 8);
+    thirdNum = Math.floor(rupeeAmount / 100);
+    ctx.drawImage(hud, 528 + 8 * thirdNum + thirdNum, 117, 8, 8, 96, 16, 8, 8);
+  }
+
+  ctx.drawImage(hud, 519, 117, 8, 8, 96, 32, 8, 8);
+  ctx.drawImage(hud, 519, 117, 8, 8, 96, 41, 8, 8);
+  ctx.drawImage(hud, 528 + 8 * keyAmount + keyAmount, 117, 8, 8, 96 + 8, 32, 8, 8);
+  ctx.drawImage(hud, 528 + 8 * bombAmount + bombAmount, 117, 8, 8, 96 + 8, 41, 8, 8);
+
+  ctx.fillRect(128, 24, 8.1, 16.1);
+  ctx.fillRect(152, 24, 8, 16);
+  if (swordEquipped == 1) {
+    ctx.drawImage(hud, 555, 137.1, 8, 15.9, 152, 24, 8, 16);
+  }
+
+  ///map fill gray
+  ctx.fillStyle = "gray";
+  ctx.fillRect(16, 8, 64, 48);
+}
 
 // Fonction d'affichage du jeu
 function draw() {
@@ -607,11 +696,11 @@ function draw() {
     ctx.fillRect(0, 0, 256, 240);
     drawMap(gameMap);
     drawturgut();
+    drawHUD();
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
     drawGameObjects();
-    // Music insuportable du jeu
+    // Music  du jeu
     BGMturgut.play();
   }, 1000 / fps);
 }
-
 draw();
