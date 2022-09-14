@@ -53,6 +53,22 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 // Mettre la fonction de la manette ici
 
+// Fonction du gyroscope
+let gyroscope = new Gyroscope({ frequency: 60 });
+
+gyroscope.addEventListener("reading", (e) => {
+  console.log(e);
+  console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
+  console.log(`Angular velocity along the Y-axis ${gyroscope.y}`);
+  console.log(`Angular velocity along the Z-axis ${gyroscope.z}`);
+  let gyroX = document.getElementById("gyroX");
+  let gyroY = document.getElementById("gyroY");
+  let gyroZ = document.getElementById("gyroZ");
+  gyroX.textContent = `X : ${gyroscope.x}`;
+  gyroY.textContent = `Y : ${gyroscope.y}`;
+  gyroZ.textContent = `Z : ${gyroscope.z}`;
+});
+
 function GameObject() {
   this.x = 0;
   this.y = 0;
@@ -700,7 +716,8 @@ function draw() {
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
     drawGameObjects();
     // Music  du jeu
-    BGMturgut.play();
+    //BGMturgut.play();
+    gyroscope.start();
   }, 1000 / fps);
 }
 draw();
