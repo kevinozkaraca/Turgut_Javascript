@@ -66,6 +66,14 @@ acl.addEventListener("reading", () => {
   gyroX.textContent = `X : ${acl.x}`;
   gyroY.textContent = `Y : ${acl.y}`;
   gyroZ.textContent = `Z : ${acl.y}`;
+  if (acl.x >= -1.5) {
+    rightPressed = true;
+    lastButtonPressed = "right";
+  }
+  if (acl.x >= 1.5) {
+    leftPressed = true;
+    lastButtonPressed = "left";
+  }
 });
 
 function GameObject() {
