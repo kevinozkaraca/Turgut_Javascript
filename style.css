@@ -49,7 +49,6 @@ canvas {
   margin: auto;
 }
 header {
-  display: flex;
   justify-content: center;
   align-content: center;
   text-align: center;
@@ -59,14 +58,5 @@ header div {
   font-size: small;
   flex-wrap: wrap;
   color: rgb(255, 255, 255);
-  margin: 5px;
-  letter-spacing: 2px;
-}
-.separation {
-  font-family: "retro1";
-  font-size: small;
-  flex-wrap: wrap;
-  color: rgb(255, 255, 255);
-  letter-spacing: 2px;
-  margin: 5px;
+  letter-spacing: 1px;
 }
