@@ -53,20 +53,19 @@ document.addEventListener("keyup", keyUpHandler, false);
 
 // Mettre la fonction de la manette ici
 
-// Fonction du gyroscope
-let gyroscope = new Gyroscope({ frequency: 60 });
+// Fonction du accelerometre
 
-gyroscope.addEventListener("reading", (e) => {
-  console.log(e);
-  console.log(`Angular velocity along the X-axis ${gyroscope.x}`);
-  console.log(`Angular velocity along the Y-axis ${gyroscope.y}`);
-  console.log(`Angular velocity along the Z-axis ${gyroscope.z}`);
+let acl = new Accelerometer({ frequency: 60 });
+acl.addEventListener("reading", () => {
+  console.log(`Acceleration along the X-axis ${acl.x}`);
+  console.log(`Acceleration along the Y-axis ${acl.y}`);
+  console.log(`Acceleration along the Z-axis ${acl.z}`);
   let gyroX = document.getElementById("gyroX");
   let gyroY = document.getElementById("gyroY");
   let gyroZ = document.getElementById("gyroZ");
-  gyroX.textContent = `X : ${gyroscope.x}`;
-  gyroY.textContent = `Y : ${gyroscope.y}`;
-  gyroZ.textContent = `Z : ${gyroscope.z}`;
+  gyroX.textContent = `X : ${acl.x}`;
+  gyroY.textContent = `Y : ${acl.y}`;
+  gyroZ.textContent = `Z : ${acl.y}`;
 });
 
 function GameObject() {
@@ -717,7 +716,7 @@ function draw() {
     drawGameObjects();
     // Music  du jeu
     //BGMturgut.play();
-    gyroscope.start();
+    acl.start();
   }, 1000 / fps);
 }
 draw();
