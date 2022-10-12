@@ -1,8 +1,3 @@
-// mettre la fonction dans la boucle
-if (joypadDetection == 1) {
-  Joypad();
-}
-
 //Detection de la manette
 window.addEventListener("gamepadconnected", function (detect) {
   let gp = navigator.getGamepads()[detect.gamepad.index];
@@ -108,4 +103,9 @@ function Joypad() {
       lastButtonPressed = "right";
     }
   }
+}
+
+// mettre la fonction dans la boucle
+if (joypadDetection == 1) {
+  Joypad();
 }
