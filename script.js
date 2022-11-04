@@ -698,7 +698,7 @@ function draw() {
     gameObjectCollision(turgutX, turgutY, gameObjects, true);
     drawGameObjects();
     // Music  du jeu
-    //BGMturgut.play();
+    BGMturgut.play();
   }, 1000 / fps);
 }
 draw();
