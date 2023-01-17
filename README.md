@@ -32,6 +32,19 @@ Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs v
 J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant à link dans le jeu "The Legend of Zelda" Une des grande référence du retro-gaming dans les jeux d'aventure. A l'époque, ce jeu se jouait avec une manette à deux boutons seulement et sans la possibilité de bouger en diagonal.
 <br>
 
+### D'où vient ce projet ?
+
+Ce jeu est à la base un tutos en anglais de "dgatewood" (de la chaine Youtube : EasyGameDev). Au fur et à mesure des videos, j'y ai ajouté des fonctionnalités :
+
+- Canvas responsive
+- Jouabilité avec une manette
+- Jouabilité les mouvements du téléphone
+- Jouablité avec une manette intégré
+- Amélioration du rendu graphique (image-rendering)
+- Correction du découpage des images
+- Changement du thèmes du jeu
+  <br>
+
 ### L'équipe de travail
 
 <p align="center">
