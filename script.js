@@ -42,7 +42,8 @@ let keyAmount = 1;
 let bombAmount = 5;
 let swordEquipped = 0;
 // Son et music
-let BGMturgut = new Audio("./music/BGM.wav");
+let BGMtitlescreen = new Audio("./music/BGM1.wav");
+let BGMturgut = new Audio("./music/BGM2.wav");
 let pickUpItemSound = new Audio("./music/pickUpItemSound.wav");
 // Tableau des cartes du jeu
 let gameObjects = [];

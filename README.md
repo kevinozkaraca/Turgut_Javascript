@@ -18,7 +18,7 @@ En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous
 <br>
 <img 
             class="IMGlink"
-            src="imagesReadme/turgutPaper.jpg"
+            src="./gameImages/titleScreen.png"
             alt="Image du Turgut"
             aria-label="Image du Turgut"
             width= 90%
@@ -27,7 +27,7 @@ En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous
 
 ### Qui est Turgut ?
 
-Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs vivaient encore comme des nomades. L'idée d'en faire un jeu d'aventure est simple : La Turquie est un pays chargé d'histoire, le meilleur endroit pour un RPG (jeu d'aventure). Le choix des graphismes simples en pixel, qui rappel le retro gaming est la pour me faciliter la tache pour les graphismes et pour que je me focalise surtout sur le code.
+Turgut est un personnage fictif d'anatolie, à l'époque où les peuples turcs vivaient encore comme des nomades. L'idée d'en faire un jeu d'aventure est simple : La Turquie est un pays chargé d'histoire, le meilleur endroit pour un RPG (jeu d'aventure). J'ai récupéré de nombreux éléments de la culture turque pour une jeu plein de référence (la barre de vie est en verre à thé, la musique en 8bit est un hymne de la guerre d'indépendance et ) Le choix des graphismes simples en pixel, qui rappel le retro gaming est la pour me faciliter la tache pour les graphismes et pour que je me focalise surtout sur le code.
 
 J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant à link dans le jeu "The Legend of Zelda" Une des grande référence du retro-gaming dans les jeux d'aventure. A l'époque, ce jeu se jouait avec une manette à deux boutons seulement et sans la possibilité de bouger en diagonal.
 <br>
@@ -51,7 +51,7 @@ Ce jeu est à la base un tutos en anglais de "dgatewood" (de la chaine Youtube :
 <br>
 <img 
             class="IMGlink"
-            src="imagesReadme/equipeTurgut.jpg"
+            src="./imagesReadme/equipeTurgut.jpg"
             alt="Photo de l'équipe de travail"
             aria-label="Photo de l'équipe de travail"
             width= 90%
