@@ -11,18 +11,7 @@ En reconversion professionnelle depuis le mois de mai 2020, je partage avec vous
 </p>
 
 <p align="center">
-    ⬆️⬆️⬆️⬆️⬆️⬆️
-</p>
-
-<p align="center">
-<br>
-<img 
-            class="IMGlink"
-            src="./gameImages/titleScreen.png"
-            alt="Image du Turgut"
-            aria-label="Image du Turgut"
-            width= 90%
-        />
+    ⬆️---------------⬆️
 </p>
 
 ### Qui est Turgut ?
@@ -36,6 +25,7 @@ J'ai réalisé le personnage Turgut grace au logiciel PISKEL. En me référant �
 
 Ce jeu est à la base un tutos en anglais de "dgatewood" (de la chaine Youtube : EasyGameDev). Au fur et à mesure des videos, j'y ai ajouté des fonctionnalités :
 
+- séparation du HTML / CSS / JS
 - Canvas responsive
 - Jouabilité avec une manette
 - Jouabilité les mouvements du téléphone
