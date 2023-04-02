@@ -4,6 +4,7 @@ const prohibitedColors = ["#2038Ec", "#00a800", "#c84c0c"]
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext('2d');
 ctx.getContextAttributes().willReadFrequently = true;
+
 let counterAxeX = 800;
 let counterAxeY = 300;
 
@@ -28,18 +29,22 @@ function directionAnimation() {
     if (e.code === "KeyW") {
       counterAxeY--;
       turgut.style.top = `${counterAxeY}` + "px";
+
     }
     if (e.code === "KeyS") {
       counterAxeY++;
       turgut.style.top = `${counterAxeY}` + "px";
+
     }
     if (e.code === "KeyA") {
       counterAxeX--;
       turgut.style.left = `${counterAxeX}` + "px";
+
     }
     if (e.code === "KeyD") {
       counterAxeX++;
       turgut.style.left = `${counterAxeX}` + "px";
+
     }
   });
   // Changement de l'image à l'arret
