@@ -1,8 +1,9 @@
 body {
-  width: 100%;
-  height: 100%;
+  width: 1500;
+  height: 1000;
   margin: 0;
   padding: 0;
+  image-rendering: pixelated;
 }
 
 #map {
@@ -28,6 +29,7 @@ body {
   left: 800px;
   top: 300px;
   z-index: 3;
+  
 }
 
 canvas {
@@ -41,6 +43,5 @@ canvas {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: black;
-
   z-index: 1;
 }
