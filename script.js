@@ -246,7 +246,7 @@ function collisionLeft() {
 
     function detecteCouleur1() {
       const x = Math.floor(turgutRect.x - 3 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 5 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(turgutRect.y + 2 - canvas.getBoundingClientRect().y);
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
@@ -264,7 +264,7 @@ function collisionLeft() {
     detecteCouleur1();
     function detecteCouleur2() {
       const x = Math.floor(turgutRect.x - 3 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 10 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(turgutRect.y + 13 - canvas.getBoundingClientRect().y);
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
@@ -296,7 +296,7 @@ function collisionRight() {
 
     function detecteCouleur1() {
       const x = Math.floor(turgutRect.x + 13 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 10 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(turgutRect.y + 13 - canvas.getBoundingClientRect().y);
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
@@ -315,7 +315,7 @@ function collisionRight() {
     detecteCouleur1();
     function detecteCouleur2() {
       const x = Math.floor(turgutRect.x + 13 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 5 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(turgutRect.y + 2 - canvas.getBoundingClientRect().y);
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
