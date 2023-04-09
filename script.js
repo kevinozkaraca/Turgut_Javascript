@@ -1,31 +1,30 @@
 const turgut = document.querySelector("#turgut");
-const map = document.querySelector("#map");
 const prohibitedColors = ["#2038ec", "#00a800", "#c84c0c"];
 const canvas = document.querySelector("#canvas");
 const ctx = canvas.getContext("2d");
+const map = document.querySelector("#map");
 ctx.imageSmoothingEnabled = false;
-const turgutLink = document.querySelector("#turgutLink");
 let counterWalk = 0;
 let counterAxeX = 800;
 let counterAxeY = 300;
+let turgetX = turgut.style.left;
+let turgetY = turgut.style.top;
 
-function directionAnimation() {
+const mapHeight = map.clientHeight;
+const mapWidth = map.clientWidth;
+let directionCameraX = 1;
+let directionCameraY = 1;
+let screenX = window.innerWidth;
+let screenY = window.innerHeight;
+function turgutCamera() {
+  turgut.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
+}
+
+function directionsAnimationsCollisionsOfTurgut() {
+  //document.querySelector("html").style.overflow = "hidden";
   document.addEventListener("keydown", (e) => {
-    // Conditions pour ne pas sortir de la carte
-    if (counterAxeX <= 2) {
-      counterAxeX = 4;
-    }
-    if (counterAxeX >= 1372) {
-      counterAxeX = 1370;
-    }
-    if (counterAxeY <= 2) {
-      counterAxeY = 4;
-    }
-    if (counterAxeY >= 689) {
-      counterAxeY = 687;
-    }
-    // Conditions pour se déplacer
     if (e.code === "KeyW") {
+      turgutCamera();
       collisionUp();
       turgut.style.backgroundImage = "url('./playerImages/turgutAnimUp1.png')";
       turgut.style.top = `${counterAxeY}` + "px";
@@ -44,6 +43,7 @@ function directionAnimation() {
       }
     }
     if (e.code === "KeyS") {
+      turgutCamera();
       collisionDown();
       turgut.style.backgroundImage =
         "url('./playerImages/turgutAnimDown1.png')";
@@ -63,6 +63,7 @@ function directionAnimation() {
       }
     }
     if (e.code === "KeyA") {
+      turgutCamera();
       collisionLeft();
       turgut.style.backgroundImage =
         "url('./playerImages/turgutAnimLeft1.png')";
@@ -84,6 +85,7 @@ function directionAnimation() {
       }
     }
     if (e.code === "KeyD") {
+      turgutCamera();
       collisionRight();
       turgut.style.backgroundImage =
         "url('./playerImages/turgutAnimRight1.png')";
@@ -151,12 +153,13 @@ function collisionUp() {
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Haut");
-        counterAxeY = counterAxeY + 2
+        counterAxeY = counterAxeY + 2;
         turgut.style.top = `${counterAxeY}` + "px";
       }
     }
@@ -169,12 +172,13 @@ function collisionUp() {
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Haut");
-        counterAxeY = counterAxeY + 2
+        counterAxeY = counterAxeY + 2;
         turgut.style.top = `${counterAxeY}` + "px";
       }
     }
@@ -196,17 +200,20 @@ function collisionDown() {
 
     function detecteCouleur1() {
       const x = Math.floor(turgutRect.x + 8 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 16 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(
+        turgutRect.y + 16 - canvas.getBoundingClientRect().y
+      );
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Bas");
-        counterAxeY = counterAxeY - 2
+        counterAxeY = counterAxeY - 2;
         turgut.style.top = `${counterAxeY}` + "px";
       }
     }
@@ -214,17 +221,20 @@ function collisionDown() {
     detecteCouleur1();
     function detecteCouleur2() {
       const x = Math.floor(turgutRect.x + 2 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 16 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(
+        turgutRect.y + 16 - canvas.getBoundingClientRect().y
+      );
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Bas");
-        counterAxeY = counterAxeY - 2
+        counterAxeY = counterAxeY - 2;
         turgut.style.top = `${counterAxeY}` + "px";
       }
     }
@@ -251,12 +261,13 @@ function collisionLeft() {
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Gauche");
-        counterAxeX = counterAxeX + 2
+        counterAxeX = counterAxeX + 2;
         turgut.style.left = `${counterAxeX}` + "px";
       }
     }
@@ -264,17 +275,20 @@ function collisionLeft() {
     detecteCouleur1();
     function detecteCouleur2() {
       const x = Math.floor(turgutRect.x - 3 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 13 - canvas.getBoundingClientRect().y);
+      const y = Math.floor(
+        turgutRect.y + 13 - canvas.getBoundingClientRect().y
+      );
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Gauche");
-        counterAxeX = counterAxeX + 2
+        counterAxeX = counterAxeX + 2;
         turgut.style.left = `${counterAxeX}` + "px";
       }
     }
@@ -295,37 +309,46 @@ function collisionRight() {
     const turgutRect = turgutDiv.getBoundingClientRect();
 
     function detecteCouleur1() {
-      const x = Math.floor(turgutRect.x + 13 - canvas.getBoundingClientRect().x);
-      const y = Math.floor(turgutRect.y + 13 - canvas.getBoundingClientRect().y);
+      const x = Math.floor(
+        turgutRect.x + 13 - canvas.getBoundingClientRect().x
+      );
+      const y = Math.floor(
+        turgutRect.y + 13 - canvas.getBoundingClientRect().y
+      );
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Droite");
-        counterAxeX = counterAxeX - 2
+        counterAxeX = counterAxeX - 2;
         turgut.style.left = `${counterAxeX}` + "px";
-
+        directionCameraX = 1;
+        directionCameraY = 1;
       }
     }
 
     detecteCouleur1();
     function detecteCouleur2() {
-      const x = Math.floor(turgutRect.x + 13 - canvas.getBoundingClientRect().x);
+      const x = Math.floor(
+        turgutRect.x + 13 - canvas.getBoundingClientRect().x
+      );
       const y = Math.floor(turgutRect.y + 2 - canvas.getBoundingClientRect().y);
       const pixel = ctx.getImageData(x, y, 1, 1).data;
       const hexColor = rgbToHex(pixel[0], pixel[1], pixel[2]);
 
       function rgbToHex(r, g, b) {
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        return (
+          "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
+        );
       }
 
       if (prohibitedColors.includes(hexColor)) {
-        console.log("collision Droite");
-        counterAxeX = counterAxeX - 2
+        counterAxeX = counterAxeX - 2;
         turgut.style.left = `${counterAxeX}` + "px";
       }
     }
@@ -337,6 +360,7 @@ function collisionRight() {
 
 // Fonction de lancement du jeu
 function gameInit() {
-  directionAnimation();
+  directionsAnimationsCollisionsOfTurgut();
+  turgutCamera()
 }
 gameInit();
