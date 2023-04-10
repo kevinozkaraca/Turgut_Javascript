@@ -13,12 +13,14 @@ const mapHeight = map.clientHeight;
 const mapWidth = map.clientWidth;
 let screenX = window.visualViewport.height / 6;
 let screenY = window.visualViewport.width / 6;
-const stickyBar = document.querySelector("#stickyBar");
-stickyBar.style.width = `${screenY - 5}px`;
-stickyBar.style.top = `${screenX - 15}px`;
+
 function turgutCamera() {
   turgut.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
-
+  let screenX = window.visualViewport.height / 6;
+  let screenY = window.visualViewport.width / 6;
+  const stickyBar = document.querySelector("#stickyBar");
+  stickyBar.style.width = `${screenY - 1}px`;
+  stickyBar.style.bottom = `${screenX - 21}px`;
 }
 
 function directionsAnimationsCollisionsOfTurgut() {

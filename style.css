@@ -51,53 +51,53 @@ canvas {
   z-index: 3;
 }
 #stickyBar {
-  height: 10px;
-  padding: 5px;
   background-color: #000000;
   position: fixed;
-  padding: 1px;
   z-index: 4;
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
   margin: auto;
+  padding: 0;
   opacity: 1;
+  margin-top: 2px;
 }
 #border {
-  height: 100%;
-  margin: 5%;
   background-color: #000000;
   margin: auto;
-  opacity: 100%;
-  border: dotted 1px #fcd8a8;
+  border: solid 1px #c7c7c7;
   box-sizing: border-box;
   font-family: "retro";
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   font-size: 0.4rem;
+  height: 100%;
 }
 #item {
-  width: 19%;
   height: 100%;
-  background-color: #000000;
+  width: 20%;
+  border-right: solid 1px #c7c7c7;
   color: white;
-  border-right: dotted 1px #fcd8a8;
   text-align: center;
+  align-content: center;
+  justify-content: center;
+  align-self: last baseline;
+  align-items: center;
+  justify-items: center;
+  vertical-align: middle;
 }
 #energy {
-  width: 39%;
   height: 100%;
-  background-color: #000000;
+  width: 60%;
   color: white;
   text-align: center;
 }
-#weapon {
-  width: 39%;
+#key {
   height: 100%;
-  background-color: #000000;
+  width: 20%;
+  border-left: solid 1px #c7c7c7;
   color: white;
-  border-left: dotted 1px #fcd8a8;
   text-align: center;
 }
