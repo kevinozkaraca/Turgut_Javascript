@@ -9,19 +9,20 @@ let counterAxeX = 800;
 let counterAxeY = 300;
 let turgetX = turgut.style.left;
 let turgetY = turgut.style.top;
-
 const mapHeight = map.clientHeight;
 const mapWidth = map.clientWidth;
-let directionCameraX = 1;
-let directionCameraY = 1;
-let screenX = window.innerWidth;
-let screenY = window.innerHeight;
+let screenX = window.visualViewport.height / 6;
+let screenY = window.visualViewport.width / 6;
+const stickyBar = document.querySelector("#stickyBar");
+stickyBar.style.width = `${screenY - 5}px`;
+stickyBar.style.top = `${screenX - 15}px`;
 function turgutCamera() {
   turgut.scrollIntoView({ behavior: "auto", block: "center", inline: "center" });
+
 }
 
 function directionsAnimationsCollisionsOfTurgut() {
-  //document.querySelector("html").style.overflow = "hidden";
+  document.querySelector("html").style.overflow = "hidden";
   document.addEventListener("keydown", (e) => {
     if (e.code === "KeyW") {
       turgutCamera();
@@ -362,5 +363,7 @@ function collisionRight() {
 function gameInit() {
   directionsAnimationsCollisionsOfTurgut();
   turgutCamera()
+
+
 }
 gameInit();

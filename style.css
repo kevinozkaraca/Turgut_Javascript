@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "retro";
+  src: url("./fontWeb/retro2.ttf");
+}
+
 body {
   width: 1390px;
   height: 705px;
@@ -5,8 +10,8 @@ body {
   padding: 0;
   image-rendering: pixelated;
   zoom: 6;
+  background-color: #fcd8a8;
 }
-
 canvas {
   width: 1390px;
   height: 705px;
@@ -20,7 +25,6 @@ canvas {
   bottom: 0;
   margin: auto;
 }
-
 #map {
   width: 1390px;
   height: 705px;
@@ -35,7 +39,6 @@ canvas {
   bottom: 0;
   margin: auto;
 }
-
 #turgut {
   width: 16px;
   height: 16px;
@@ -46,4 +49,55 @@ canvas {
   left: 800px;
   top: 300px;
   z-index: 3;
+}
+#stickyBar {
+  height: 10px;
+  padding: 5px;
+  background-color: #000000;
+  position: fixed;
+  padding: 1px;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  opacity: 1;
+}
+#border {
+  height: 100%;
+  margin: 5%;
+  background-color: #000000;
+  margin: auto;
+  opacity: 100%;
+  border: dotted 1px #fcd8a8;
+  box-sizing: border-box;
+  font-family: "retro";
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.4rem;
+}
+#item {
+  width: 19%;
+  height: 100%;
+  background-color: #000000;
+  color: white;
+  border-right: dotted 1px #fcd8a8;
+  text-align: center;
+}
+#energy {
+  width: 39%;
+  height: 100%;
+  background-color: #000000;
+  color: white;
+  text-align: center;
+}
+#weapon {
+  width: 39%;
+  height: 100%;
+  background-color: #000000;
+  color: white;
+  border-left: dotted 1px #fcd8a8;
+  text-align: center;
 }
